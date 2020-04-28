@@ -1,7 +1,7 @@
 import bodyParser from "body-parser"
 import express from "express"
 import socket from "socket.io"
-import { checkAuth } from "../middlewares"
+import { checkAuth, updateLastSeen } from "../middlewares"
 import { loginValidation, registerValidation } from "../utils/validations"
 
 import { UserCtrl, DialogCtrl, MessageCtrl } from "../controllers"
@@ -13,6 +13,7 @@ const createRoutes = (app: express.Express, io: socket.Server) => {
 
   app.use(bodyParser.json())
   app.use(checkAuth)
+  app.use(updateLastSeen)
 
   app.get("/user/me", UserController.getMe)
   app.get("/user/verify", UserController.verify)

@@ -34,10 +34,9 @@ class DialogController {
 
   create = (req: express.Request, res: express.Response) => {
     const postData = {
-      author: req.body.user._id,
+      author: req.body.author,
       partner: req.body.partner,
     }
-
     const dialog = new DialogModel(postData)
 
     dialog
@@ -52,14 +51,7 @@ class DialogController {
         message
           .save()
           .then(() => {
-            dialogObj.lastMessage = message._id
-            dialogObj.save().then(() => {
-              res.json(dialogObj)
-              this.io.emit("SERVER:DIALOG_CREATED", {
-                ...postData,
-                dialog: dialogObj,
-              })
-            })
+            res.json(dialogObj)
           })
           .catch((reason) => {
             res.json(reason)
