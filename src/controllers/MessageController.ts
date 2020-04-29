@@ -11,11 +11,11 @@ class MessageController {
   }
 
   index = (req: express.Request, res: express.Response) => {
-    const dialogId: string = req.query.dialog.toString()
+    const dialogId: any = req.query.dialog
 
-    MessageModel.find({ dialogId })
+    MessageModel.find({ dialog: dialogId })
       .populate(["dialog", "user"])
-      .exec(function (err, messages) {
+      .exec(function (err: any, messages: any) {
         if (err) {
           return res.status(404).json({
             message: "Messages not found",
