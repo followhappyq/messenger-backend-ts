@@ -1,6 +1,7 @@
 import bodyParser from "body-parser"
 import express from "express"
 import socket from "socket.io"
+import cors from "cors"
 import { checkAuth, updateLastSeen } from "../middlewares"
 import { loginValidation, registerValidation } from "../utils/validations"
 
@@ -19,6 +20,7 @@ const createRoutes = (app: express.Express, io: socket.Server) => {
   const MessageController = new MessageCtrl(io)
   const UploadFileController = new UploadFileCtrl()
 
+  app.use(cors({ origin: "http://followhappyq.github.io/" }))
   app.use(bodyParser.json())
   app.use(checkAuth)
   app.use(updateLastSeen)
